@@ -8,6 +8,16 @@ class RecurringMoment
     @period = period
   end
 
+  def advance(period)
+    if period == 'daily'
+      self.now + period.values.days
+    elsif period == 'weekly'
+      self.now + interval.weeks
+    else period == 'monthly'
+      self.now + interval.months
+    end
+  end
+
   def match(date)
     current = @start
 
@@ -17,9 +27,9 @@ class RecurringMoment
       end
 
       if @period == 'monthly'
-        current = current.advance(weeks: @interval)
-      elsif @period = 'weekly'
         current = current.advance(months: @interval)
+      elsif @period = 'weekly'
+        current = current.advance(weeks: @interval)
       elsif @period == 'daily'
         current = current.advance(days: @interval)
       end
@@ -27,4 +37,5 @@ class RecurringMoment
 
     return false
   end
+
 end
